@@ -1,9 +1,9 @@
 /**
  * Classe Ambiente - um ambiente em um jogo adventure.
- *
+
  * Esta classe eh parte da aplicacao "World of Zuul".
  * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.  
- *
+
  * Um "Ambiente" representa uma localizacao no cenario do jogo. Ele eh
  * conectado aos outros ambientes atraves de saidas. As saidas sao
  * nomeadas como norte, sul, leste e oeste. Para cada direcao, o ambiente

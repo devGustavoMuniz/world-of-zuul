@@ -1,16 +1,16 @@
 /**
  * Esta classe eh parte da aplicacao "World of Zuul".
  * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.  
- *
+
  * Essa classe guarda informacoes sobre um comando que foi digitado pelo 
  * usuario. Um comando atualmente consiste em duas strings: uma palavra
  * de comando e uma segunda palavra (por exemplo, se o campo for "pegar
  * mapa", entao as duas strings obviamente serao "pegar" e "mapa").
- * 
+
  * Isso eh usado assim: comandos ja estao validados como comandos validos
  * Se o usuario entrou um comando invalido (uma palavra que nao eh
  * conhecida) entao o a palavra de comando eh <null>.
- *
+
  * Se o comando tem so uma palavra, a segunda palavra eh <null>
  * 
  * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
@@ -19,8 +19,8 @@
 
 public class Comando
 {
-    private String palavraDeComando;
-    private String segundaPalavra;
+    private final String palavraDeComando;
+    private final String segundaPalavra;
 
     /**
      * Cria um objeto comando. Primeira e segunda palavra devem ser 
