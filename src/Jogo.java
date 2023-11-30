@@ -1,42 +1,22 @@
-/**
- *  Essa eh a classe principal da aplicacao "World of Zull".
- *  "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
- *  Usuarios podem caminhar em um cenario. E eh tudo! Ele realmente
- *  precisa ser estendido para fazer algo interessante!
-
- *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
- *  "jogar".
-
- *  Essa classe principal cria e inicializa todas as outras: ela cria os
- *  ambientes, cria o analisador e comeca o jogo. Ela tambeme avalia e 
- *  executa os comandos que o analisador retorna.
- * 
- * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
- * @version 2011.07.31 (2016.02.01)
- */
-
+// Principal Classe do jogo, aqui que a maioria das outras classe são instanciadas
 public class Jogo 
 {
     private final Analisador analisador;
     private Ambiente ambienteAtual;
         
-    /**
-     * Cria o jogo e incializa seu mapa interno.
-     */
+    // Construtor do jogo, onde é inicializado o mapa
     public Jogo() 
     {
         criarAmbientes();
         analisador = new Analisador();
     }
 
-    /**
-     * Cria todos os ambientes e liga as saidas deles
-     */
+    // Criação dos ambientes e suas respectivas saídas
     private void criarAmbientes()
     {
         Ambiente patio, lab01, lab06, compjr, escada, portaria, fora;
       
-        // cria os ambientes
+        // Criação os ambientes
         patio = new Ambiente("Pátio do DCC");
         lab01 = new Ambiente("Laboratório 01 do DCC");
         lab06 = new Ambiente("Laboratório 06 do DCC");
@@ -45,7 +25,7 @@ public class Jogo
         portaria = new Ambiente("Portaria do DCC");
         fora = new Ambiente("Parte de fora do DCC");
 
-        // inicializa as saidas dos ambientes
+        // Inicialização as saidas dos ambientes
         patio.ajustarSaidas(escada, compjr, lab01, lab06);
         lab01.ajustarSaidas(patio, null, null, null);
         lab06.ajustarSaidas(null, patio, null, null);
@@ -53,19 +33,16 @@ public class Jogo
         escada.ajustarSaidas(portaria, null, patio, null);
         portaria.ajustarSaidas(fora, null, escada, null);
 
-        ambienteAtual = patio;  // o jogo comeca do lado de fora
+        // Define o ambiente em que o jogo é iniciado
+        ambienteAtual = patio;
     }
 
-    /**
-     *  Rotina principal do jogo. Fica em loop ate terminar o jogo.
-     */
+    // Principal método do jogo, fica em loop até o mesmo ser finalizado
     public void jogar() 
     {            
         imprimirBoasVindas();
 
-        // Entra no loop de comando principal. Aqui nos repetidamente lemos
-        // comandos e os executamos ate o jogo terminar.
-                
+        // Loop dos comandos
         boolean terminado = false;
         while (! terminado) {
             Comando comando = analisador.pegarComando();
@@ -74,9 +51,7 @@ public class Jogo
         System.out.println("Obrigado por jogar. Ate mais!");
     }
 
-    /**
-     * Imprime a mensagem de abertura para o jogador.
-     */
+    // Printa a mensagem de abertura
     private void imprimirBoasVindas()
     {
         System.out.println();
@@ -88,11 +63,9 @@ public class Jogo
         imprimirOpcoesSaida();
     }
 
-    /**
-     * Dado um comando, processa-o (ou seja, executa-o)
-     * @param comando O Comando a ser processado.
-     * @return true se o comando finaliza o jogo.
-     */
+    // Método que lida com o comando do usuário
+    // @param 'comando' - O Comando a ser processado.
+    // @return 'true' se o comando finalizar o jogo.
     private boolean processarComando(Comando comando) 
     {
         boolean querSair = false;
@@ -118,13 +91,7 @@ public class Jogo
         return querSair;
     }
 
-    // Implementacoes dos comandos do usuario
-
-    /**
-     * Printe informacoes de ajuda.
-     * Aqui nos imprimimos algo bobo e enigmatico e a lista de 
-     * palavras de comando
-     */
+    // Printa o texto de ajuda para o usuário
     private void imprimirAjuda() 
     {
         System.out.println("Voce esta perdido. Voce esta sozinho. Voce caminha");
@@ -134,14 +101,11 @@ public class Jogo
         System.out.println("   ir sair ajuda");
     }
 
-    /** 
-     * Tenta ir em uma direcao. Se existe uma saida entra no 
-     * novo ambiente, caso contrario imprime mensagem de erro.
-     */
+    // Método para ir a algum ambiente, caso exista
     private void irParaAmbiente(Comando comando) 
     {
         if(!comando.temSegundaPalavra()) {
-            // se nao ha segunda palavra, nao sabemos pra onde ir...
+            // Lembra o usuário de informar a segunda palavra
             System.out.println("Ir pra onde?");
             return;
         }
@@ -158,6 +122,7 @@ public class Jogo
         }
     }
 
+    // Pega o ambiente em que o usuário está tentando entrar
     private Ambiente getAmbiente(Comando comando) {
         String direcao = comando.getSegundaPalavra();
 
@@ -178,6 +143,7 @@ public class Jogo
         return proximoAmbiente;
     }
 
+    // Printa as opções de saída do ambiente atual
     public void imprimirOpcoesSaida() {
         System.out.println("Voce esta " + ambienteAtual.getDescricao());
 
@@ -197,11 +163,9 @@ public class Jogo
         System.out.println();
     }
 
-    /** 
-     * "Sair" foi digitado. Verifica o resto do comando pra ver
-     * se nos queremos realmente sair do jogo.
-     * @return true, se este comando sai do jogo, false, caso contrario
-     */
+    // Método para lidar com o comando 'sair'
+    // @param 'comando' - O Comando a ser processado
+    // @return true, se o comando sair do jogo
     private boolean sair(Comando comando) 
     {
         if(comando.temSegundaPalavra()) {
@@ -209,6 +173,6 @@ public class Jogo
             return false;
         }
         // else alterado pra early return
-        return true;  // sinaliza que nos queremos sair
+        return true;
     }
 }

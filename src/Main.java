@@ -3,8 +3,6 @@ public class Main {
         Jogo jogo = new Jogo();
         try {
             jogo.jogar();
-        } catch (Exception ignored) {
-
-        }
+        } catch (Exception ignored) {}
     }
 }
