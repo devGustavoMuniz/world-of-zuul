@@ -31,6 +31,17 @@ public class Analisador
         entrada = new Scanner(System.in);
     }
 
+
+    public String interagirComUsuario(String pergunta){
+        System.out.println(pergunta);
+        return entrada.nextLine();
+    }
+
+    public void forcarInteracaoUsuario(String pergunta){
+        System.out.println(pergunta);
+        entrada.nextLine();
+    }
+
     /**
      * @return O proximo comando do usuario
      */

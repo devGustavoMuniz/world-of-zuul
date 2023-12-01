@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Classe Ambiente - um ambiente em um jogo adventure.
  *
@@ -15,11 +18,11 @@
  */
 public class Ambiente 
 {
-    public String descricao;
-    public Ambiente saidaNorte;
-    public Ambiente saidaSul;
-    public Ambiente saidaLeste;
-    public Ambiente saidaOeste;
+    private String descricao;
+
+    private HashMap<String, Ambiente> saidas;
+
+    private ArrayList<Npc> npcs;
 
     /**
      * Cria um ambiente com a "descricao" passada. Inicialmente, ele
@@ -33,6 +36,18 @@ public class Ambiente
     public Ambiente(String descricao) 
     {
         this.descricao = descricao;
+        saidas = new HashMap<String, Ambiente>();
+        npcs = new ArrayList<Npc>();
+    }
+
+    public void addNpc(Npc npc){
+        try{
+            if (!npcs.contains(npc)) {
+                this.npcs.add(npc);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar npc. " + e);
+        }
     }
 
     /**
@@ -43,16 +58,8 @@ public class Ambiente
      * @param sul A saida sul.
      * @param oeste A saida oeste.
      */
-    public void ajustarSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste) 
-    {
-        if(norte != null)
-            saidaNorte = norte;
-        if(leste != null)
-            saidaLeste = leste;
-        if(sul != null)
-            saidaSul = sul;
-        if(oeste != null)
-            saidaOeste = oeste;
+    public void ajustarSaidas(String direcao, Ambiente ambiente) {
+        saidas.put(direcao, ambiente);
     }
 
     /**
@@ -61,6 +68,20 @@ public class Ambiente
     public String getDescricao()
     {
         return descricao;
+    }
+
+    public Ambiente getAmbiente(String direcao){
+        return saidas.get(direcao);
+    }
+
+    public String getSaidasAmbiente(){
+        String retorno = "";
+
+        for(String direcao : saidas.keySet()){
+            retorno += direcao + " ";
+        }
+        return retorno;
+
     }
 
 }
