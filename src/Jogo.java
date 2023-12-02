@@ -207,7 +207,7 @@ public class Jogo
         }
         else {
             ambienteAtual = proximoAmbiente;
-
+            personagemPrincipal.gastarMovimento();
             imprimirOpcoesSaida();
         }
     }
