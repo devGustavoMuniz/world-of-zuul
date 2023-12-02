@@ -19,7 +19,21 @@ public class Analisador
     }
 
     // @return O próximo comando do usuario
-    public Comando pegarComando() 
+
+    public String interagirComUsuario(String pergunta){
+        System.out.println(pergunta);
+        return entrada.nextLine();
+    }
+
+    public void forcarInteracaoUsuario(String pergunta){
+        System.out.println(pergunta);
+        entrada.nextLine();
+    }
+
+    /**
+     * @return O proximo comando do usuario
+     */
+    public Comando pegarComando()
     {
         String linha;   // guardará uma linha inteira
         String palavra1 = null;
