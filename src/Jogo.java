@@ -31,6 +31,8 @@ public class Jogo
         portaria = new Ambiente("Portaria do DCC");
         fora = new Ambiente("Parte de fora do DCC");
 
+
+        // inicializa as saidas dos ambientes
         patio.ajustarSaidas("norte",escada);
         patio.ajustarSaidas("leste",compjr);
         patio.ajustarSaidas("sul",lab01);
@@ -44,7 +46,6 @@ public class Jogo
         portaria.ajustarSaidas("norte",fora);
         portaria.ajustarSaidas("sul",escada);
 
-        // inicializa as saidas dos ambientes
 
         // Define o ambiente em que o jogo é iniciado
         ambienteAtual = patio;
@@ -62,9 +63,6 @@ public class Jogo
         System.out.println("Vejo o Joaquim no laboratório com o pé enfaixado em cima da cadeira, o Dolf (seu cachorro da raça Dachshund) e duas muletas estavam do lado dele.");
 
         pegarResposta("1- Joaquim, o que aconteceu com seu pé??\n Digite qual opção você quer falar:",1);
-
-        // Define o ambiente em que o jogo é iniciado
-        ambienteAtual = patio;
         System.out.println("Joaquim: Escorreguei naquela chuva de granizo de ontem, cai e machuquei o pé, agora vou ter que ficar um tempo com essas muletas");
         pegarResposta("1- Nossa, melhoras!\n Digite qual opção você quer falar:",1);
 

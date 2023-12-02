@@ -35,6 +35,7 @@ public class Ambiente
         npcs = new ArrayList<Npc>();
     }
 
+    // Método para adicionar os Npcs
     public void addNpc(Npc npc){
         try{
             if (!npcs.contains(npc)) {
@@ -45,29 +46,13 @@ public class Ambiente
         }
     }
 
-    /**
-     * Define as saidas do ambiente. Cada direcao ou leva a um
-     * outro ambiente ou eh null (nenhuma saida para la).
-     * @param norte A saida norte.
-     * @param leste A saida leste.
-     * @param sul A saida sul.
-     * @param oeste A saida oeste.
-     */
-    public void ajustarSaidas(String direcao, Ambiente ambiente) {
-        saidas.put(direcao, ambiente);
     // Método para definir as saídas do ambiente
     // Caso não tenha saída definida, é setado como null
-    public void ajustarSaidas(Ambiente norte, Ambiente leste, Ambiente sul, Ambiente oeste)
-    {
-        if(norte != null)
-            saidaNorte = norte;
-        if(leste != null)
-            saidaLeste = leste;
-        if(sul != null)
-            saidaSul = sul;
-        if(oeste != null)
-            saidaOeste = oeste;
+    public void ajustarSaidas(String direcao, Ambiente ambiente) {
+        saidas.put(direcao, ambiente);
     }
+
+
 
     // Método que retorna a descrição do ambiente
     public String getDescricao()
