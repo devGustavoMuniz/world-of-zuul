@@ -35,4 +35,16 @@ public class PersonagemPrincipal extends Personagem {
 //        }
 //        return null;
 //    }
+
+    public int getMovimentos(){return this.movimentos;}
+
+    // Gasta um movimento do jogador
+    public void gastarMovimento() {
+        this.movimentos -= 1;
+    }
+
+    // Verifica se o jogador ja gastou todos os seus movimentos
+    public boolean verificaMovimentos(){
+        return this.movimentos != 0;
+    }
 }
