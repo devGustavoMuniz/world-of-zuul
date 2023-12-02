@@ -235,6 +235,20 @@ public class Jogo
         System.out.println();
     }
 
+    // Printa o final em que o jogador perde falta de movimentos
+    public void printGameOverOutMoves(){
+        System.out.println("* Tum Dum *");
+        System.out.println("Recebo uma notificação no celular, é uma mensagem de Carlinhos");
+        System.out.println("Notificação: Há, recuperei o Dolf");
+        System.out.println();
+        printGameOver();
+    }
+
+    public void printGameOver(){
+        System.out.println("GAME OVER!!!!");
+        System.out.println();
+        System.out.println("Deseja jogar novamente? (sim/nao)");
+    }
     // Método para lidar com o comando 'sair'
     // @param 'comando' - O Comando a ser processado
     // @return true, se o comando sair do jogo
