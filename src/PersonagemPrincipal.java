@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 
+import java.util.Random;
 public class PersonagemPrincipal extends Personagem {
     private ArrayList<Npc> npcsInteragidos;
+    private int movimentos;
 
     public PersonagemPrincipal(String nome, char sexo) {
         super(nome, sexo);
         this.npcsInteragidos = new ArrayList<Npc>();
+        Random random = new Random();
+        this.movimentos = random.nextInt(16) + 10;
     }
 
     public void adicionarNpcInteragido(Npc npc) {
