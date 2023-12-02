@@ -14,7 +14,7 @@ public class PersonagemPrincipal extends Personagem {
 
     public void adicionarNpcInteragido(Npc npc) {
         try {
-            if (!npcsInteragidos.contains(npc)) {
+            if (getNpcByName(npc.getNome()) == null) {
                 this.npcsInteragidos.add(npc);
             }
         } catch (Exception e) {
@@ -23,18 +23,25 @@ public class PersonagemPrincipal extends Personagem {
     }
 
     public boolean interagiu(Npc npc) {
-        return this.npcsInteragidos.contains(npc);
+
+        try{
+
+            return getNpcByName(npc.getNome()) == null;
+        }
+        catch (Exception e){
+            System.out.println("Erro ao interagir com npc:" + e.getMessage() + e);
+            return false;
+        }
     }
 
-//    public Npc getNpcByName(String nome) {
-//        for (Npc npc : this.npcsInteragidos) {
-//            System.out.println(npc.getNome() + " vs " + nome);
-//            if (npc.getNome() == nome) {
-//                return npc;
-//            }
-//        }
-//        return null;
-//    }
+    public Npc getNpcByName(String nome) {
+        for (Npc npc : this.npcsInteragidos) {
+            if (npc.getNome().equals(nome)) {
+                return npc;
+            }
+        }
+        return null;
+    }
 
     public int getMovimentos(){return this.movimentos;}
 

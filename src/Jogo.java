@@ -106,7 +106,7 @@ public class Jogo
                 " ele gosta muito de frango e de coco seco. E ah, o frango pode ser com ou sem osso. Boa sorte!",
                 'm');
         merschmann = new Npc("Merschmann", " Se você falar comigo de novo, vou te processar.", 'm');
-        Npc alunaPPOO = new Npc("Aluna de PPOO","Pode ser que alguém tenha frango na sala da comp.", 'f',joaquim);
+        aluna = new Npc("Aluna de PPOO","Pode ser que alguém tenha frango na sala da comp.", 'f',joaquim);
     }
 
     // Principal método do jogo, fica em loop até o mesmo ser finalizado

@@ -19,20 +19,29 @@ import java.util.HashMap;
 // Classe a respeito do ambiente, que representa uma localização no cenário do jogo
 // Conectando outros ambientes através das saídas, para cada direção é referenciado um ambiente vizinho
 // Ou null caso não haja ambiente naquela direção
-public class Ambiente
+public class Ambiente implements Requisito
 {
     private String descricao;
 
     private HashMap<String, Ambiente> saidas;
 
+    private Npc requisito;
+
     private ArrayList<Npc> npcs;
 
     // Construtor para criar um ambiente com a descrição passada
-    public Ambiente(String descricao) 
+    public Ambiente(String descricao)
     {
         this.descricao = descricao;
         saidas = new HashMap<String, Ambiente>();
         npcs = new ArrayList<Npc>();
+    }
+    public Ambiente(String descricao, Npc requisito)
+    {
+        this.descricao = descricao;
+        saidas = new HashMap<String, Ambiente>();
+        npcs = new ArrayList<Npc>();
+        requisito = requisito;
     }
 
     // Método para adicionar os Npcs
@@ -64,6 +73,24 @@ public class Ambiente
         return saidas.get(direcao);
     }
 
+    //metodo para verificar se existe e se cumpre o requisito para entrar no ambiente caso exista
+    @Override
+    public boolean cumpreRequisito(PersonagemPrincipal personagem){
+        if(!temRequisito()){
+            return true;
+        }
+        else{
+            if(personagem.interagiu(this.requisito)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean temRequisito(){
+        return this.requisito != null;
+    }
     public String getSaidasAmbiente(){
         String retorno = "";
 
