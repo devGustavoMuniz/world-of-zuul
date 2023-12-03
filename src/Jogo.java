@@ -230,7 +230,7 @@ public class Jogo
         System.out.println("pela universidade.");
         System.out.println();
         System.out.println("Suas palavras de comando sao:");
-        System.out.println("   ir sair ajuda");
+        System.out.println(PalavrasComando.getComandosValidos());
     }
 
     // Método para ir a algum ambiente, caso exista

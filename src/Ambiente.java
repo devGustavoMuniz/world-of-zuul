@@ -59,12 +59,14 @@ public class Ambiente implements Requisito
         return npcs;
     }
 
+    public boolean existeNpc(){
+        return npcs.size() > 0;
+    }
     // Método para definir as saídas do ambiente
     // Caso não tenha saída definida, é setado como null
     public void ajustarSaidas(String direcao, Ambiente ambiente) {
         saidas.put(direcao, ambiente);
     }
-
 
 
     // Método que retorna a descrição do ambiente
