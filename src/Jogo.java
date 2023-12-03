@@ -79,7 +79,7 @@ public class Jogo
                 " ele gosta muito de frango e de coco seco. E ah, o frango pode ser com ou sem osso. Boa sorte!",
                 'm');
         merschmann = new Npc("Merschmann", " Se você falar comigo de novo, vou te processar.", 'm');
-        aluna = new Npc("Aluna de PPOO","Pode ser que alguém tenha frango na sala da comp.", 'f',joaquim);
+        aluna = new Npc("Aluna","Pode ser que alguém tenha frango na sala da comp.", 'f',joaquim);
         carlinhos = new Npc("Carlinhos", "aaaa", 'm');
         dolf = new Npc("Dolf", "aaaa", 'm');
         duda = new Npc("Duda", "aaaa", 'f');
@@ -209,19 +209,51 @@ public class Jogo
                 imprimirOpcoesSaida();
                 break;
             case "interagir":
-//                interagirComNpc(ambienteAtual.getNpc());
+                interagirComNpc(comando);
+                break;
+            case "observar":
+                observar();
                 break;
         }
 
         return querSair;
     }
 
-    private void interagirComNpc(Npc npc) {
-        if(this.personagemPrincipal != null){
-            System.out.println();
+    private void interagirComNpc(Comando comando) {
+        if(!comando.temSegundaPalavra()) {
+            // Lembra o usuário de informar com quem deseja interagir
+            System.out.println("Interagir com quem?");
+            return;
         }
+        String nomeNpc = comando.getSegundaPalavra();
+        Npc npc = ambienteAtual.getNpcByName(nomeNpc);
+        if(npc != null){
+            String informacao = personagemPrincipal.interagir(npc);
+            System.out.println(informacao);
+        }
+        else{
+            System.out.println("Não existem npcs por aqui.");
+        }
+//        "Não encontramos nenhum npc com este nome."
+//        return npc.getDica();
+
+
     }
 
+
+
+    private void observar(){
+        System.out.println("Você está em: " + ambienteAtual.getDescricao());
+        if(!ambienteAtual.existeNpc()){
+            System.out.println("Você está sozinho.");
+        }
+        else{
+            ArrayList<String> nomeNpcs = ambienteAtual.getNomeNpcs();
+            for(String nome : nomeNpcs){
+                System.out.println("O npc " + nome + " está aqui.");
+            }
+        }
+    }
 
     // Printa o texto de ajuda para o usuário
     private void imprimirAjuda()
@@ -266,6 +298,7 @@ public class Jogo
         }
         return proximoAmbiente;
     }
+
 
     // Printa as opções de saída do ambiente atual
     public void imprimirOpcoesSaida() {

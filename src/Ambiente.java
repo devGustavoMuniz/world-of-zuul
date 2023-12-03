@@ -79,6 +79,22 @@ public class Ambiente implements Requisito
         return saidas.get(direcao);
     }
 
+    public ArrayList<String> getNomeNpcs(){
+        ArrayList<String> nomeNpcs = new ArrayList<String>();
+        for(Npc npc : npcs) {
+            nomeNpcs.add(npc.getNome());
+        }
+        return nomeNpcs;
+    }
+
+    public Npc getNpcByName(String nome) {
+        for (Npc npc : this.npcs) {
+            if (npc.getNome().equals(nome)) {
+                return npc;
+            }
+        }
+        return null;
+    }
     //metodo para verificar se existe e se cumpre o requisito para entrar no ambiente caso exista
     @Override
     public boolean cumpreRequisito(PersonagemPrincipal personagem){

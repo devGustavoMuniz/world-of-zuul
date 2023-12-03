@@ -22,11 +22,17 @@ public class PersonagemPrincipal extends Personagem {
         }
     }
 
+    public String interagir(Npc npc){
+        if(npc.cumpreRequisito(this)) {
+            interagiu(npc);
+            return npc.getDica();
+        }
+        return "Você deve falar com o " + npc.getRequisito() + " para conseguir minha dica.";
+    }
+
     public boolean interagiu(Npc npc) {
-
         try{
-
-            return getNpcByName(npc.getNome()) == null;
+            return getNpcByName(npc.getNome()) != null;
         }
         catch (Exception e){
             System.out.println("Erro ao interagir com npc:" + e.getMessage() + e);

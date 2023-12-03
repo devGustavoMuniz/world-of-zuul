@@ -10,18 +10,18 @@ public class Npc extends Personagem implements Requisito {
         this.informacao = info;
         this.requisito = requisito;
     }
-    public String getDica(PersonagemPrincipal personagem){
-        personagem.adicionarNpcInteragido(this);
-        if(cumpreRequisito(personagem)){
-            return apresentacao() + "Como posso lhe ajudar?";
-        }
-        return apresentacao() + "Caso você esteja atrás do Dolf, " + this.informacao;
+    public String getDica(){
+        return "Dica: " + this.informacao;
     }
 
     @Override
     public boolean cumpreRequisito(PersonagemPrincipal personagem){
-        return temRequisito() && personagem.interagiu(this.requisito);
+        if(!temRequisito()) {
+            return true;
+        }
+        return personagem.interagiu(this.requisito);
     }
+
     @Override
     public boolean temRequisito(){
         return this.requisito != null;
@@ -30,6 +30,8 @@ public class Npc extends Personagem implements Requisito {
         char vocabulo = this.getSexo() == 'm' ? 'o' : 'a';
         return "Olá, eu sou " + vocabulo +" " + this.getNome()+". ";
     }
-
+    public String getRequisito(){
+        return this.requisito.getNome();
+    }
 
 }
