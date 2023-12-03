@@ -41,6 +41,7 @@ public class Ambiente implements Requisito
         this.descricao = descricao;
         saidas = new HashMap<String, Ambiente>();
         npcs = new ArrayList<Npc>();
+
         requisito = requisito;
     }
 
@@ -96,23 +97,17 @@ public class Ambiente implements Requisito
         return null;
     }
     //metodo para verificar se existe e se cumpre o requisito para entrar no ambiente caso exista
-    @Override
-    public boolean cumpreRequisito(PersonagemPrincipal personagem){
-        if(!temRequisito()){
-            return true;
-        }
-        else{
-            if(personagem.interagiu(this.requisito)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public boolean temRequisito(){
         return this.requisito != null;
     }
+
+    @Override
+    public Npc getRequisito() {
+        return this.requisito;
+    }
+
     public String getSaidasAmbiente(){
         String retorno = "";
 

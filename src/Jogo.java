@@ -9,14 +9,15 @@ public class Jogo
     private final Analisador analisador;
     private Ambiente ambienteAtual;
 
+    private ArrayList<Npc> npcs;
+    private ArrayList<Ambiente> ambientes;
     private PersonagemPrincipal personagemPrincipal;
 
     // Construtor do jogo, onde é inicializado o mapa
     public Jogo() 
     {
-        List<Npc> npcs = criarNpcs();
-        List<Ambiente> ambientes = criarAmbientes();
-        adicionarNpcsAosAmbientes(npcs, ambientes);
+        npcs = new ArrayList<Npc>(criarNpcs());
+        criarAmbientes();
         analisador = new Analisador();
     }
 
@@ -96,35 +97,66 @@ public class Jogo
         return npcs;
     }
 
+    private Npc getNpcByName(String nome){
+        for (Npc npc : this.npcs) {
+            if (npc.getNome().equals(nome)) {
+                return npc;
+            }
+        }
+        return null;
+    }
     // Criação dos ambientes e suas respectivas saídas
-    private List<Ambiente> criarAmbientes()
+    private void criarAmbientes()
     {
-        List<Ambiente> ambientes = new ArrayList<>();
         Ambiente patio, lab01, lab06, compjr, escada, portaria, fora;
+        Npc merschmann, joaquim, dolf, carlinhos, aluna, duda, motoboy;
+
+        merschmann = getNpcByName("Merschmann");
+        joaquim = getNpcByName("Joaquim");
+        dolf = getNpcByName("Dolf");
+        carlinhos = getNpcByName("Carlinhos");
+        aluna = getNpcByName("Aluna");
+        duda = getNpcByName("Duda");
+        motoboy = getNpcByName("Motoboy");
 
         // Criação os ambientes
         patio = new Ambiente("Pátio do DCC");
-        lab01 = new Ambiente("Laboratório 01 do DCC");
-        lab06 = new Ambiente("Laboratório 06 do DCC");
-        compjr = new Ambiente("Salinha da Comp Jr");
+        lab01 = new Ambiente("Laboratório 01 do DCC",joaquim);
+        lab06 = new Ambiente("Laboratório 06 do DCC",merschmann);
+        compjr = new Ambiente("Salinha da Comp Jr",joaquim);
         escada = new Ambiente("Escada do DCC");
         portaria = new Ambiente("Portaria do DCC");
         fora = new Ambiente("Parte de fora do DCC");
-
 
         // inicializa as saidas dos ambientes
         patio.ajustarSaidas("norte",escada);
         patio.ajustarSaidas("leste",compjr);
         patio.ajustarSaidas("sul",lab01);
         patio.ajustarSaidas("oeste",lab06);
+        patio.addNpc(dolf);
+
         lab01.ajustarSaidas("norte",patio);
+        lab01.addNpc(joaquim);
+        lab01.addNpc(carlinhos);
+
         lab06.ajustarSaidas("leste",patio);
+        lab06.addNpc(merschmann);
+        lab06.addNpc(aluna);
+
         compjr.ajustarSaidas("oeste",patio);
+        compjr.addNpc(duda);
+
         escada.ajustarSaidas("norte", portaria);
         escada.ajustarSaidas("norte", portaria);
         escada.ajustarSaidas("sul",patio);
+
         portaria.ajustarSaidas("norte",fora);
         portaria.ajustarSaidas("sul",escada);
+
+        fora.addNpc(motoboy);
+
+        // Define o ambiente em que o jogo é iniciado
+        ambienteAtual = patio;
 
         ambientes.add(patio);
         ambientes.add(lab01);
@@ -134,10 +166,6 @@ public class Jogo
         ambientes.add(portaria);
         ambientes.add(fora);
 
-        // Define o ambiente em que o jogo é iniciado
-        ambienteAtual = patio;
-
-        return ambientes;
     }
 
     private void adicionarNpcsAosAmbientes(List<Npc> npcs, List<Ambiente> ambientes) {
@@ -280,10 +308,33 @@ public class Jogo
             System.out.println("Nao ha passagem!");
         }
         else {
-            ambienteAtual = proximoAmbiente;
-            personagemPrincipal.gastarMovimento();
+            if(personagemPrincipal.cumpreRequisito(proximoAmbiente)){
+                ambienteAtual = proximoAmbiente;
+                personagemPrincipal.gastarMovimento();
+            }
+            else{
+                System.out.println("Para entrar nesta sala você deve falar com " + proximoAmbiente.getRequisito());
+            }
             imprimirOpcoesSaida();
         }
+    }
+
+    private Ambiente getAmbienteByDescricao(String descricao){
+        for (Ambiente ambiente : ambientes){
+            if(ambiente.getDescricao().equals(descricao)){
+                return ambiente;
+            }
+        }
+        return null;
+    }
+    private void tratarEntradaAmbientesComRequisito(Ambiente ambiente){
+        if(ambiente.getDescricao().equals("Laboratório 06 do DCC")){
+            System.out.println("Não foi possível entrar na sala");
+            System.out.println("Seus pontos de ação diminúíram com essa tentativa.");
+            personagemPrincipal.gastarMovimento();
+
+        }
+        System.out.println("Para entrar nesta sala você deve falar com " + ambiente.getRequisito());
     }
 
     // Pega o ambiente em que o usuário está tentando entrar

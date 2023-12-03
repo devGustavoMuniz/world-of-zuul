@@ -14,13 +14,6 @@ public class Npc extends Personagem implements Requisito {
         return "Dica: " + this.informacao;
     }
 
-    @Override
-    public boolean cumpreRequisito(PersonagemPrincipal personagem){
-        if(!temRequisito()) {
-            return true;
-        }
-        return personagem.interagiu(this.requisito);
-    }
 
     @Override
     public boolean temRequisito(){
@@ -30,8 +23,13 @@ public class Npc extends Personagem implements Requisito {
         char vocabulo = this.getSexo() == 'm' ? 'o' : 'a';
         return "Olá, eu sou " + vocabulo +" " + this.getNome()+". ";
     }
-    public String getRequisito(){
-        return this.requisito.getNome();
+
+    public Npc getRequisito(){
+        return this.requisito;
+    }
+
+    public String falar(String fala, String nomeJogador){
+        return getNome() + ": " + nomeJogador + " " + fala;
     }
 
 }

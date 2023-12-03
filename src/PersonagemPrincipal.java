@@ -22,8 +22,23 @@ public class PersonagemPrincipal extends Personagem {
         }
     }
 
+
+    public boolean cumpreRequisito(Npc target){
+        if(!target.temRequisito()){
+            return true;
+        }
+        return this.interagiu(target.getRequisito());
+    }
+
+    public boolean cumpreRequisito(Ambiente target){
+        if(!target.temRequisito()){
+            return true;
+        }
+        return this.interagiu(target.getRequisito());
+    }
+
     public String interagir(Npc npc){
-        if(npc.cumpreRequisito(this)) {
+        if(this.cumpreRequisito(npc)) {
             interagiu(npc);
             return npc.getDica();
         }
