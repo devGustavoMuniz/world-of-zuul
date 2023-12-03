@@ -1,4 +1,6 @@
 import static java.lang.Integer.parseInt;
+import java.util.List;
+import java.util.ArrayList;
 
 // Principal Classe do jogo, aqui que a maioria das outras classe são instanciadas
 // Principal Classe do jogo, aqui que a maioria das outras classe são instanciadas
@@ -12,44 +14,13 @@ public class Jogo
     // Construtor do jogo, onde é inicializado o mapa
     public Jogo() 
     {
-        criarAmbientes();
-        criarNpcs();
+        List<Npc> npcs = criarNpcs();
+        List<Ambiente> ambientes = criarAmbientes();
+        adicionarNpcsAosAmbientes(npcs, ambientes);
         analisador = new Analisador();
     }
 
-    // Criação dos ambientes e suas respectivas saídas
-    private void criarAmbientes()
-    {
-        Ambiente patio, lab01, lab06, compjr, escada, portaria, fora;
-      
-        // Criação os ambientes
-        patio = new Ambiente("Pátio do DCC");
-        lab01 = new Ambiente("Laboratório 01 do DCC");
-        lab06 = new Ambiente("Laboratório 06 do DCC");
-        compjr = new Ambiente("Salinha da Comp Jr");
-        escada = new Ambiente("Escada do DCC");
-        portaria = new Ambiente("Portaria do DCC");
-        fora = new Ambiente("Parte de fora do DCC");
 
-
-        // inicializa as saidas dos ambientes
-        patio.ajustarSaidas("norte",escada);
-        patio.ajustarSaidas("leste",compjr);
-        patio.ajustarSaidas("sul",lab01);
-        patio.ajustarSaidas("oeste",lab06);
-        lab01.ajustarSaidas("norte",patio);
-        lab06.ajustarSaidas("leste",patio);
-        compjr.ajustarSaidas("oeste",patio);
-        escada.ajustarSaidas("norte", portaria);
-        escada.ajustarSaidas("norte", portaria);
-        escada.ajustarSaidas("sul",patio);
-        portaria.ajustarSaidas("norte",fora);
-        portaria.ajustarSaidas("sul",escada);
-
-
-        // Define o ambiente em que o jogo é iniciado
-        ambienteAtual = patio;
-    }
 
     private void introducao(){
         System.out.println("Nossa, que pena que não consegui ir fazer a atividade 4 de Estrutura de Dados, mas que bom que o Joaquim me deixou refazer a atividade hoje, sábado, bora pra o laboratório DCC-01 no dcc da Ufla e tomara que dê tudo certo...");
@@ -100,13 +71,84 @@ public class Jogo
         }
     }
 
-    private void criarNpcs(){
+    private List<Npc> criarNpcs(){
+        List<Npc> npcs = new ArrayList<>();
+
         Npc joaquim, merschmann, aluna, carlinhos, dolf, duda, motoboy;
         joaquim = new Npc("Joaquim",
                 " ele gosta muito de frango e de coco seco. E ah, o frango pode ser com ou sem osso. Boa sorte!",
                 'm');
         merschmann = new Npc("Merschmann", " Se você falar comigo de novo, vou te processar.", 'm');
         aluna = new Npc("Aluna de PPOO","Pode ser que alguém tenha frango na sala da comp.", 'f',joaquim);
+        carlinhos = new Npc("Carlinhos", "aaaa", 'm');
+        dolf = new Npc("Dolf", "aaaa", 'm');
+        duda = new Npc("Duda", "aaaa", 'f');
+        motoboy = new Npc("Motoboy", "aaaa", 'm');
+
+        npcs.add(joaquim);
+        npcs.add(merschmann);
+        npcs.add(aluna);
+        npcs.add(carlinhos);
+        npcs.add(dolf);
+        npcs.add(duda);
+        npcs.add(motoboy);
+
+        return npcs;
+    }
+
+    // Criação dos ambientes e suas respectivas saídas
+    private List<Ambiente> criarAmbientes()
+    {
+        List<Ambiente> ambientes = new ArrayList<>();
+        Ambiente patio, lab01, lab06, compjr, escada, portaria, fora;
+
+        // Criação os ambientes
+        patio = new Ambiente("Pátio do DCC");
+        lab01 = new Ambiente("Laboratório 01 do DCC");
+        lab06 = new Ambiente("Laboratório 06 do DCC");
+        compjr = new Ambiente("Salinha da Comp Jr");
+        escada = new Ambiente("Escada do DCC");
+        portaria = new Ambiente("Portaria do DCC");
+        fora = new Ambiente("Parte de fora do DCC");
+
+
+        // inicializa as saidas dos ambientes
+        patio.ajustarSaidas("norte",escada);
+        patio.ajustarSaidas("leste",compjr);
+        patio.ajustarSaidas("sul",lab01);
+        patio.ajustarSaidas("oeste",lab06);
+        lab01.ajustarSaidas("norte",patio);
+        lab06.ajustarSaidas("leste",patio);
+        compjr.ajustarSaidas("oeste",patio);
+        escada.ajustarSaidas("norte", portaria);
+        escada.ajustarSaidas("norte", portaria);
+        escada.ajustarSaidas("sul",patio);
+        portaria.ajustarSaidas("norte",fora);
+        portaria.ajustarSaidas("sul",escada);
+
+        ambientes.add(patio);
+        ambientes.add(lab01);
+        ambientes.add(lab06);
+        ambientes.add(compjr);
+        ambientes.add(escada);
+        ambientes.add(portaria);
+        ambientes.add(fora);
+
+        // Define o ambiente em que o jogo é iniciado
+        ambienteAtual = patio;
+
+        return ambientes;
+    }
+
+    private void adicionarNpcsAosAmbientes(List<Npc> npcs, List<Ambiente> ambientes) {
+        // Adiciona cada NPC ao ambiente correspondente
+        ambientes.get(0).addNpc(npcs.get(4)); // Dolf no pátio
+        ambientes.get(1).addNpc(npcs.get(0)); // Joaquim no lab01
+        ambientes.get(1).addNpc(npcs.get(3)); // Carlinhos no lab01
+        ambientes.get(2).addNpc(npcs.get(1)); // Merschmann no lab06
+        ambientes.get(2).addNpc(npcs.get(2)); // Aluna no lab06
+        ambientes.get(3).addNpc(npcs.get(5)); // Duda na compjr
+        ambientes.get(6).addNpc(npcs.get(6)); // Motoboy no lado de fora
     }
 
     // Principal método do jogo, fica em loop até o mesmo ser finalizado

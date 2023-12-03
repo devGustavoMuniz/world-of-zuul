@@ -55,6 +55,10 @@ public class Ambiente implements Requisito
         }
     }
 
+    public ArrayList<Npc> getNpcs() {
+        return npcs;
+    }
+
     // Método para definir as saídas do ambiente
     // Caso não tenha saída definida, é setado como null
     public void ajustarSaidas(String direcao, Ambiente ambiente) {
