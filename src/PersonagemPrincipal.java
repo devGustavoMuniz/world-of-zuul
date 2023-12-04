@@ -34,7 +34,7 @@ public class PersonagemPrincipal extends Personagem {
                 this.npcsInteragidos.add(npc);
             }
         } catch (Exception e) {
-            System.out.println("Erro ao interagir com npc. " + e);
+            System.out.println("Erro ao interagir com npc. ");
         }
     }
 
@@ -75,7 +75,7 @@ public class PersonagemPrincipal extends Personagem {
             return getNpcByName(npc.getNome()) != null;
         }
         catch (Exception e){
-            System.out.println("Erro ao interagir com npc:" + e.getMessage() + e);
+            System.out.println("Erro ao interagir com npc:");
             return false;
         }
     }

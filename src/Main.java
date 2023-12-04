@@ -4,7 +4,6 @@ public class Main {
         try {
             jogo.jogar();
         } catch (Exception ignored) {
-            System.out.println("Erro jogo:" + ignored);
         }
     }
 }

@@ -95,7 +95,6 @@ public class Jogo
             }
         }
         catch(Exception e){
-            System.out.println("Error: " + e.getMessage());
             pegarResposta("Opção inválida, por favor digite um número válido",numeroDesejado);
         }
     }
