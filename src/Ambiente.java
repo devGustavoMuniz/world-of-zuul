@@ -41,8 +41,7 @@ public class Ambiente implements Requisito
         this.descricao = descricao;
         saidas = new HashMap<String, Ambiente>();
         npcs = new ArrayList<Npc>();
-
-        requisito = requisito;
+        this.requisito = requisito;
     }
 
     // Método para adicionar os Npcs
@@ -90,7 +89,7 @@ public class Ambiente implements Requisito
 
     public Npc getNpcByName(String nome) {
         for (Npc npc : this.npcs) {
-            if (npc.getNome().equals(nome)) {
+            if (npc.getNome().toLowerCase().equals(nome.toLowerCase())) {
                 return npc;
             }
         }
