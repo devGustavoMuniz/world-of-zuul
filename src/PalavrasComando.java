@@ -1,20 +1,36 @@
-// Classe a respeito dos comandos do jogo
+/**
+ * Esta classe eh parte da aplicacao "World of Zuul".
+ * "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
+ *
+ * Essa classe guarda uma enumeracao de todos os comandos conhecidos do
+ * jogo. Ela eh usada no reconhecimento de comandos como eles sao digitados.
+ *
+ * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
+ * @version 2011.07.31 (2016.02.01)
+ */
 public class PalavrasComando
 {
-    // Um vetor constante que guarda todas as palavras de comandos válidas
+    /**
+     * Constante que armazena os comandos válidos.
+    */
     private static final String[] comandosValidos = {
         "ir", "sair", "ajuda", "interagir", "saidas", "observar"
     };
 
-    // Construtor
+    /**
+     * Construtor que inicializa a classe PalavrasComando
+    */
     public PalavrasComando()
     {
         // nada a fazer no momento...
     }
 
-    // Verifica se a palavra é um comando válido
-    // @param 'umaString' - string de entrada do usuário
-    // @return 'true' caso seja um comando válido
+    /**
+     * Este método verifica se a entrada é um comando.
+     *
+     * @param umaString O comando a ser analisado.
+     * @return boolean.
+     */
     public boolean ehComando(String umaString)
     {
         for (String comandosValido : comandosValidos) {
@@ -24,6 +40,11 @@ public class PalavrasComando
         return false;
     }
 
+    /**
+     * Este método busca por todos os comando válidos.
+     *
+     * @return String.
+     */
     public static String getComandosValidos(){
         String retorno = "";
         for (int i = 0; i < comandosValidos.length; i++) {

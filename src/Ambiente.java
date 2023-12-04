@@ -16,9 +16,6 @@ import java.util.HashMap;
  * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
  * @version 2011.07.31 (2016.02.01)
  */
-// Classe a respeito do ambiente, que representa uma localização no cenário do jogo
-// Conectando outros ambientes através das saídas, para cada direção é referenciado um ambiente vizinho
-// Ou null caso não haja ambiente naquela direção
 public class Ambiente implements Requisito
 {
     private String descricao;

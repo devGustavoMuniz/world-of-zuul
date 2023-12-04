@@ -2,8 +2,22 @@ import static java.lang.Integer.parseInt;
 import java.util.List;
 import java.util.ArrayList;
 
-// Principal Classe do jogo, aqui que a maioria das outras classe são instanciadas
-// Principal Classe do jogo, aqui que a maioria das outras classe são instanciadas
+/**
+ *  Essa eh a classe principal da aplicacao "World of Zull".
+ *  "World of Zuul" eh um jogo de aventura muito simples, baseado em texto.
+ *  Usuarios podem caminhar em um cenario. E eh tudo! Ele realmente
+ *  precisa ser estendido para fazer algo interessante!
+ *
+ *  Para jogar esse jogo, crie uma instancia dessa classe e chame o metodo
+ *  "jogar".
+ *
+ *  Essa classe principal cria e inicializa todas as outras: ela cria os
+ *  ambientes, cria o analisador e comeca o jogo. Ela tambeme avalia e
+ *  executa os comandos que o analisador retorna.
+ *
+ * @author  Michael Kölling and David J. Barnes (traduzido por Julio Cesar Alves)
+ * @version 2011.07.31 (2016.02.01)
+ */
 public class Jogo
 {
     private final Analisador analisador;
@@ -13,7 +27,9 @@ public class Jogo
     private ArrayList<Ambiente> ambientes;
     private PersonagemPrincipal personagemPrincipal;
 
-    // Construtor do jogo, onde é inicializado o mapa
+    /**
+     * Cria o jogo e incializa seu mapa interno.
+     */
     public Jogo() 
     {
         npcs = new ArrayList<Npc>(criarNpcs());
@@ -23,6 +39,9 @@ public class Jogo
 
 
 
+    /**
+     * Método para printar a introdução do jogo na tela
+     */
     private void introducao(){
         System.out.println("Nossa, que pena que não consegui ir fazer a atividade 4 de Estrutura de Dados, mas que bom que o Joaquim me deixou refazer a atividade hoje, sábado, bora pra o laboratório DCC-01 no dcc da Ufla e tomara que dê tudo certo...");
         tecleEContinue();
@@ -55,11 +74,19 @@ public class Jogo
 
     }
 
-    // Principal método do jogo, fica em loop até o mesmo ser finalizado
+    /**
+     * Método para o usuário sinalizar que pode prosseguir com o jogo
+     */
     private void tecleEContinue(){
         analisador.forcarInteracaoUsuario("-\nAperte enter para continuar");
     }
 
+    /**
+     * Pega a respota do usuário pra uma determinada pergunta
+     *
+     * @param pergunta Pergunta que o jogo fará ao usuário
+     * @param numeroDesejado Resposta esperada pelo programa
+     */
     private void pegarResposta(String pergunta, int numeroDesejado){
         try{
             if (parseInt(analisador.interagirComUsuario(pergunta)) != numeroDesejado){
@@ -72,6 +99,11 @@ public class Jogo
         }
     }
 
+    /**
+     * Cria todos os NPCs
+     *
+     * @return Uma lista com os NPCs criados
+     */
     private List<Npc> criarNpcs(){
         List<Npc> npcs = new ArrayList<>();
 
@@ -97,6 +129,12 @@ public class Jogo
         return npcs;
     }
 
+    /**
+     * Procura um NPC pelo nome
+     *
+     * @return Objeto da classe Npc
+     */
+
     private Npc getNpcByName(String nome){
         for (Npc npc : this.npcs) {
             if (npc.getNome().equals(nome)) {
@@ -105,7 +143,10 @@ public class Jogo
         }
         return null;
     }
-    // Criação dos ambientes e suas respectivas saídas
+
+    /**
+     * Cria todos os ambientes e liga as saidas deles
+     */
     private void criarAmbientes()
     {
         Ambiente patio, lab01, lab06, compjr, escada, portaria, fora;
@@ -168,8 +209,10 @@ public class Jogo
 
     }
 
+    /**
+     * Adiciona cada NPC ao seu respectivo ambiente
+     */
     private void adicionarNpcsAosAmbientes(List<Npc> npcs, List<Ambiente> ambientes) {
-        // Adiciona cada NPC ao ambiente correspondente
         ambientes.get(0).addNpc(npcs.get(4)); // Dolf no pátio
         ambientes.get(1).addNpc(npcs.get(0)); // Joaquim no lab01
         ambientes.get(1).addNpc(npcs.get(3)); // Carlinhos no lab01
@@ -179,7 +222,9 @@ public class Jogo
         ambientes.get(6).addNpc(npcs.get(6)); // Motoboy no lado de fora
     }
 
-    // Principal método do jogo, fica em loop até o mesmo ser finalizado
+    /**
+     *  Rotina principal do jogo. Fica em loop ate terminar o jogo.
+     */
     public void jogar()
     {            
         imprimirBoasVindas();
@@ -193,7 +238,9 @@ public class Jogo
         System.out.println("Obrigado por jogar. Ate mais!");
     }
 
-    // Printa a mensagem de abertura
+    /**
+     * Imprime a mensagem de abertura para o jogador.
+     */
     private void imprimirBoasVindas()
     {
         System.out.println();
@@ -210,9 +257,11 @@ public class Jogo
 
     }
 
-    // Método que lida com o comando do usuário
-    // @param 'comando' - O Comando a ser processado.
-    // @return 'true' se o comando finalizar o jogo.
+    /**
+     * Dado um comando, processa-o (ou seja, executa-o)
+     * @param comando O Comando a ser processado.
+     * @return true se o comando finaliza o jogo.
+     */
     private boolean processarComando(Comando comando) 
     {
         boolean querSair = false;
@@ -247,6 +296,9 @@ public class Jogo
         return querSair;
     }
 
+    /**
+     * Esse método é responsável pela interação com NPC
+     */
     private void interagirComNpc(Comando comando) {
         if(!comando.temSegundaPalavra()) {
             // Lembra o usuário de informar com quem deseja interagir
@@ -269,7 +321,9 @@ public class Jogo
     }
 
 
-
+    /**
+     * Esse método diz pro jogador se tem alguem no ambiente.
+     */
     private void observar(){
         System.out.println("Você está em: " + ambienteAtual.getDescricao());
         if(!ambienteAtual.existeNpc()){
@@ -283,7 +337,11 @@ public class Jogo
         }
     }
 
-    // Printa o texto de ajuda para o usuário
+    /**
+     * Printe informacoes de ajuda.
+     * Aqui nos imprimimos algo bobo e enigmatico e a lista de
+     * palavras de comando
+     */
     private void imprimirAjuda()
     {
         System.out.println("Voce esta perdido. Voce esta sozinho. Voce caminha");
@@ -293,7 +351,10 @@ public class Jogo
         System.out.println(PalavrasComando.getComandosValidos());
     }
 
-    // Método para ir a algum ambiente, caso exista
+    /**
+     * Tenta ir em uma direcao. Se existe uma saida entra no
+     * novo ambiente, caso contrario imprime mensagem de erro.
+     */
     private void irParaAmbiente(Comando comando) 
     {
         if(!comando.temSegundaPalavra()) {
@@ -319,6 +380,11 @@ public class Jogo
         }
     }
 
+    /**
+     * Faz uma busca pelos ambientes de acordo com sua descrição
+     * @param descricao
+     * @return objeto da classe Ambiente
+     */
     private Ambiente getAmbienteByDescricao(String descricao){
         for (Ambiente ambiente : ambientes){
             if(ambiente.getDescricao().equals(descricao)){
@@ -327,6 +393,10 @@ public class Jogo
         }
         return null;
     }
+
+    /**
+     * Esse método trata dos requisitos pra entrar em determinado ambiente
+     */
     private void tratarEntradaAmbientesComRequisito(Ambiente ambiente){
         if(ambiente.getDescricao().equals("Laboratório 06 do DCC")){
             System.out.println("Não foi possível entrar na sala");
@@ -351,7 +421,9 @@ public class Jogo
     }
 
 
-    // Printa as opções de saída do ambiente atual
+    /**
+     * Esse método mostra pro usuário as opções de saída do ambiente atual
+     */
     public void imprimirOpcoesSaida() {
         System.out.println("Voce esta " + ambienteAtual.getDescricao());
         System.out.println("Saidas: ");
@@ -361,7 +433,9 @@ public class Jogo
         System.out.println();
     }
 
-    // Printa o final em que o jogador perde falta de movimentos
+    /**
+     * Printa a mensagem de game over caso o usuário esgote o numero de movimentos
+     */
     public void printGameOverOutMoves(){
         System.out.println("* Tum Dum *");
         System.out.println("Recebo uma notificação no celular, é uma mensagem de Carlinhos");
@@ -370,14 +444,20 @@ public class Jogo
         printGameOver();
     }
 
+    /**
+     * Printa a mensagem de game over pro usuário
+     */
     public void printGameOver(){
         System.out.println("GAME OVER!!!!");
         System.out.println();
         System.out.println("Deseja jogar novamente? (sim/nao)");
     }
-    // Método para lidar com o comando 'sair'
-    // @param 'comando' - O Comando a ser processado
-    // @return true, se o comando sair do jogo
+
+    /**
+     * "Sair" foi digitado. Verifica o resto do comando pra ver
+     * se nos queremos realmente sair do jogo.
+     * @return true, se este comando sai do jogo, false, caso contrario
+     */
     private boolean sair(Comando comando) 
     {
         if(comando.temSegundaPalavra()) {
